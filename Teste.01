@@ -3,32 +3,26 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from email.mime.image import MIMEImage
 
-# Configurações do servidor SMTP
 SMTP_SERVER = 'smtp.gmail.com'  # SMTP do servidor
 SMTP_PORT = 587  # Porta do Gmail
 SMTP_USER = 'leo.teste01@gmail.com' 
 SMTP_PASSWORD = 'teste12345'  
 
-# Função para enviar o e-mail
 def enviar_email(destinatario, assunto, corpo_html):
     with smtplib.SMTP(SMTP_SERVER, SMTP_PORT) as server:
         server.starttls()  # Criptografa a conexão
         server.login(SMTP_USER, SMTP_PASSWORD)
 
-        # Criando a mensagem
         msg = MIMEMultipart()
         msg['From'] = SMTP_USER
         msg['To'] = destinatario
         msg['Subject'] = assunto
 
-        # Corpo do e-mail em HTML com o pixel de rastreamento
         corpo = MIMEText(corpo_html, 'html')
         msg.attach(corpo)
 
-        # função para envio do e-mail
         server.sendmail(SMTP_USER, destinatario, msg.as_string())
 
-# Função para gerar o HTML com o pixel de rastreamento
 def gerar_corpo_html():
     corpo_html = """
     <html>
@@ -42,7 +36,6 @@ def gerar_corpo_html():
     """
     return corpo_html
 
-# enviando o e-mail
 destinatario = 'destinatario@example.com'
 assunto = 'Teste de E-mail com Pixel de Rastreamento'
 corpo_html = gerar_corpo_html()
